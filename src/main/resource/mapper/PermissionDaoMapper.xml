@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.innersso.dao.PermissionDao">
+  <select id="findAll"  resultType="com.innersso.pojo.Permission">
+    SELECT * from permission;
+  </select>
+
+  <select id="findByAdminUserId" parameterType="int" resultType="com.innersso.pojo.Permission">
+    select p.*
+    from user u
+    LEFT JOIN role_user ru on u.id= ru.user_id
+    LEFT JOIN role r on ru.role_id=r.id
+    LEFT JOIN permission_role pr on pr.role_id=r.id
+    LEFT JOIN permission p on p.id =pr.permission_id
+    where u.id=#{userId}
+  </select>
+</mapper>
